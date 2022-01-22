@@ -560,6 +560,4 @@ points(x=mus[,1], y=std[,1], col=col.alpha("red",1))
 
 ![](common_value_actions_files/figure-gfm/unnamed-chunk-46-1.png)<!-- -->
 
-``` r
-# for(i in 1:96)
-```
+
