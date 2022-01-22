@@ -1,4 +1,4 @@
-common_value_auctions
+Common_value_auctions
 ================
 
 # Instalation
@@ -76,13 +76,8 @@ means <- as.data.frame(means)
 
 ## A statistical model
 
-$$
-B\_{i} \\sim Normal(\\mu\_{i}, \\sigma)\\\\
-\\mu\_{i} = \\alpha + \\beta\_{F}F + \\beta\_{E}E + \\beta\_{C}C + \\beta\_{P}P + \\beta\_{R}R\\\\
-\\alpha \\sim Normal(2,1)\\\\
-c(\\beta\_{F},\\beta\_{E},\\beta\_{C},\\beta\_{P},\\beta\_{R}) \\sim Normal(0,1)\\\\
-\\sigma \\sim Exponential(1)
-$$
+![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/pooled%20model.png)
+
 ## Fit the model
 
 ``` r
@@ -137,28 +132,6 @@ model{
 ``` r
 m1 <- stan(model_code=code_m1,data=dlist,chains=4,cores=4)
 ```
-
-    ## Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB foo.c
-    ## clang -mmacosx-version-min=10.13 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/Rcpp/include/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/unsupported"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/BH/include" -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/src/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppParallel/include/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include '/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include   -fPIC  -Wall -g -O2  -c foo.c -o foo.o
-    ## In file included from <built-in>:1:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Dense:1:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Core:88:
-    ## /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name 'namespace'
-    ## namespace Eigen {
-    ## ^
-    ## /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected ';' after top level declarator
-    ## namespace Eigen {
-    ##                ^
-    ##                ;
-    ## In file included from <built-in>:1:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Dense:1:
-    ## /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: 'complex' file not found
-    ## #include <complex>
-    ##          ^~~~~~~~~
-    ## 3 errors generated.
-    ## make: *** [foo.o] Error 1
 
 ``` r
 precis(m1)
@@ -240,14 +213,7 @@ points(x=mus[,1], y=std[,1], col=col.alpha("red",1))
 
 ## A statistical model
 
-$$
-B\_{i} \\sim Normal(\\mu\_{i}, \\sigma)\\\\
-\\mu\_{i} = \\alpha + \\delta\[U\_{i}\] + \\beta\_{F}F + \\beta\_{E}E + \\beta\_{C}C + \\beta\_{P}P + \\beta\_{R}R\\\\
-\\alpha \\sim Normal(2,1)\\\\
-c(\\beta\_{F},\\beta\_{E},\\beta\_{C},\\beta\_{P},\\beta\_{R}) \\sim Normal(0,1)\\\\
-\\sigma \\sim Exponential(1)\\\\
-\\delta \\sim Normal(0,0.5)
-$$
+![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/unpooled%20model.png)
 
 ## Fit the model
 
@@ -308,28 +274,6 @@ model{
 m2 <- stan(model_code=code_m2,data=dlist2,chains=4,cores=4)
 ```
 
-    ## Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB foo.c
-    ## clang -mmacosx-version-min=10.13 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/Rcpp/include/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/unsupported"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/BH/include" -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/src/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppParallel/include/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include '/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include   -fPIC  -Wall -g -O2  -c foo.c -o foo.o
-    ## In file included from <built-in>:1:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Dense:1:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Core:88:
-    ## /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name 'namespace'
-    ## namespace Eigen {
-    ## ^
-    ## /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected ';' after top level declarator
-    ## namespace Eigen {
-    ##                ^
-    ##                ;
-    ## In file included from <built-in>:1:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Dense:1:
-    ## /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: 'complex' file not found
-    ## #include <complex>
-    ##          ^~~~~~~~~
-    ## 3 errors generated.
-    ## make: *** [foo.o] Error 1
-
 ``` r
 precis(m2)
 ```
@@ -367,13 +311,13 @@ pred_means = np.mean(preds, axis=1)
 ```
 
 ``` python
-# az.plot_kde(r.means.avg)
-# az.plot_kde(pred_means)
-# for i in range(50):
-#   az.plot_kde(np.array(preds)[:,i], plot_kwargs={'color':'red', 'alpha':0.1}, bw=0.15)
-# plt.xlabel("Average bought")
-# plt.ylabel("Frequency")
-# plt.show()
+az.plot_kde(r.means.avg)
+az.plot_kde(pred_means)
+for i in range(50):
+  az.plot_kde(np.array(preds)[:,i], plot_kwargs={'color':'red', 'alpha':0.1}, bw=0.15)
+plt.xlabel("Average bought")
+plt.ylabel("Frequency")
+plt.show()
 ```
 
 ``` r
@@ -416,16 +360,7 @@ points(x=mus[,1], y=std[,1], col=col.alpha("red",1))
 
 ## A statistical model
 
-$$
-B\_{i} \\sim Normal(\\mu\_{i}, \\sigma\_{i})\\\\
-\\mu\_{i} = \\alpha + \\delta\[U\_{i}\] + \\beta\_{F}F + \\beta\_{E}E + \\beta\_{C}C + \\beta\_{P}P + \\beta\_{R}R\\\\
-\\sigma\_{i} = \\sigma \* \\lambda\_{i} \\\\
-\\lambda \\sim TruncatedNormal(1,0.2,0.05)\\\\
-\\alpha \\sim Normal(2,1)\\\\
-c(\\beta\_{F},\\beta\_{E},\\beta\_{C},\\beta\_{P},\\beta\_{R}) \\sim Normal(0,1)\\\\
-\\sigma \\sim Exponential(1)\\\\
-\\delta \\sim Normal(0,0.5)
-$$
+![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/Heteroskedasticity.png)
 
 ## Fit the model
 
@@ -492,28 +427,6 @@ model{
 m3 <- stan(model_code=code_m3,data=dlist2,chains=4,cores=4)
 ```
 
-    ## Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB foo.c
-    ## clang -mmacosx-version-min=10.13 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/Rcpp/include/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/unsupported"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/BH/include" -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/src/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppParallel/include/"  -I"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include '/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include   -fPIC  -Wall -g -O2  -c foo.c -o foo.o
-    ## In file included from <built-in>:1:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Dense:1:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Core:88:
-    ## /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name 'namespace'
-    ## namespace Eigen {
-    ## ^
-    ## /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected ';' after top level declarator
-    ## namespace Eigen {
-    ##                ^
-    ##                ;
-    ## In file included from <built-in>:1:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-    ## In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Dense:1:
-    ## /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: 'complex' file not found
-    ## #include <complex>
-    ##          ^~~~~~~~~
-    ## 3 errors generated.
-    ## make: *** [foo.o] Error 1
-
 ``` r
 precis(m3)
 ```
@@ -551,13 +464,13 @@ pred_means = np.mean(preds, axis=1)
 ```
 
 ``` python
-# az.plot_kde(r.means.avg)
-# az.plot_kde(pred_means)
-# for i in range(50):
-#   az.plot_kde(np.array(preds)[:,i], plot_kwargs={'color':'red', 'alpha':0.1}, bw=0.15)
-# plt.xlabel("Average bought")
-# plt.ylabel("Frequency")
-# plt.show()
+az.plot_kde(r.means.avg)
+az.plot_kde(pred_means)
+for i in range(50):
+  az.plot_kde(np.array(preds)[:,i], plot_kwargs={'color':'red', 'alpha':0.1}, bw=0.15)
+plt.xlabel("Average bought")
+plt.ylabel("Frequency")
+plt.show()
 ```
 
 ``` r
