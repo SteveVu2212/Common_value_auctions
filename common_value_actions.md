@@ -1,4 +1,4 @@
-Common_value_auctions
+Purchasing behavior in Common value auctions
 ================
 
 # Instalation
