@@ -37,7 +37,7 @@ import arviz as az
 # Load data
 
 ``` r
-path <- "/Users/mac/Documents/1. Chapman/2. MSBCE/3. Fall 2021/CS 686 - Bayes Stats/Common value auction/com_value_survey.csv"
+path <- ".../com_value_survey.csv"
 df_raw <- read.csv(path,header=TRUE)
 ```
 
@@ -77,6 +77,8 @@ means <- as.data.frame(means)
 ## A statistical model
 
 ![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/pooled%20stat%20model.png)
+
+By using priors of standard normal distributions for coefficients of predictor variables, it implies of L2 regularization in Bayesian perspectives
 
 ## Fit the model
 
@@ -179,6 +181,9 @@ plt.show()
 
 ![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/pooled%20model.png)
 
+This chart compares the average number of bought signals of each subject between our model's posterior prediction and the actual data. The actual data shows us 
+a significant heterogeneity in purchasing behavior that we haven't counted in as someone bought no signals and the others purchased 3 signals on average. However, the pooled model draws a concentration between 0 and 1.5 signals bought
+
 ``` r
 pred_means <- matrix(0,nrow=96,ncol=30)
 for(i in 1:96){pred_means[i,] = apply(B_sim[,(30*i-29):(30*i)],2,mean)}
@@ -187,7 +192,6 @@ pred_sd <- rep(mean(post1$sigma),96)
 ```
 
 ``` r
-#The average of bought signals for each subject across the posterior predictive simulations
 
 plot(NULL, xlim=c(0,3.5),ylim=c(0,2),xlab="mean",ylab="std")
 points(x=means$avg,y=means$std,col=col.alpha(rangi2,1),pch=16)
@@ -195,6 +199,8 @@ points(x=pred_means, y=pred_sd, col=col.alpha("red",1))
 ```
 
 ![](common_value_actions_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+
+It explicitly shows the pooled model's viewpoint of the world with an expectation of a concentration between 0 and 1.5 signals bought
 
 ``` r
 mus <- matrix(0,96,length(post1$a))
@@ -211,11 +217,15 @@ points(x=mus[,1], y=std[,1], col=col.alpha("red",1))
 
 ![](common_value_actions_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
+Again, the simulated data (open red points) is mostly located in the range of mean of 0 and 1.5 and standard deviation of 0.5 and 1.5. It's pretty off in compared with the real data. We're going to improve it by a unpooled model 
+
 # 2. Unpooled models
 
 ## A statistical model
 
 ![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/unpooled%20stat%20model.png)
+
+In the model, each subject has their own mean that is different from the overall mean by a value of delta
 
 ## Fit the model
 
@@ -324,6 +334,8 @@ plt.show()
 
 ![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/unpooled%20model.png)
 
+While the model moves forward and take into account of different purchasing behaviour as someone bought up to 3 signals, there is a room to improve as the model predicts that people bought negative number of signals. We need to set a lower bound
+
 ``` r
 pred_means <- matrix(0,nrow=96,ncol=30)
 for(i in 1:96){pred_means[i,] = apply(B_sim2[,(30*i-29):(30*i)],2,mean)}
@@ -365,6 +377,8 @@ points(x=mus[,1], y=std[,1], col=col.alpha("red",1))
 ## A statistical model
 
 ![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/Heteroskedasticity%20stat%20model.png)
+
+To extend the unpooled model, we allow each subjects to have their own variance by assigning a multiplicative factor, sigma_lambda. And we're going to truncate it to keep the modulations positive 
 
 ## Fit the model
 
@@ -478,6 +492,8 @@ plt.show()
 ```
 
 ![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/Heteroskedasticity.png)
+
+Here we go. The model did allow subjects who bought no signals to have very small sigma estimates while the others have their own variance. The estimation spreads out instead of a heavy concentration as in the pooled model
 
 ``` r
 pred_means <- matrix(0,nrow=96,ncol=30)
