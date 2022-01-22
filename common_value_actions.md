@@ -76,7 +76,7 @@ means <- as.data.frame(means)
 
 ## A statistical model
 
-![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/pooled%20model.png)
+![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/pooled%20stat%20model.png)
 
 ## Fit the model
 
@@ -169,13 +169,15 @@ preds = np.mean(preds, axis=2)
 ```
 
 ``` python
-# az.plot_kde(r.means.avg)
-# for i in range(50):
-#   az.plot_kde(np.array(preds)[:,i], plot_kwargs={'color':'red', 'alpha':0.1}, bw=0.15)
-# plt.xlabel("Average bought")
-# plt.ylabel("Frequency")
-# plt.show()
+az.plot_kde(r.means.avg)
+for i in range(50):
+  az.plot_kde(np.array(preds)[:,i], plot_kwargs={'color':'red', 'alpha':0.1}, bw=0.15)
+plt.xlabel("Average bought")
+plt.ylabel("Frequency")
+plt.show()
 ```
+
+![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/pooled%20model.png)
 
 ``` r
 pred_means <- matrix(0,nrow=96,ncol=30)
@@ -213,7 +215,7 @@ points(x=mus[,1], y=std[,1], col=col.alpha("red",1))
 
 ## A statistical model
 
-![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/unpooled%20model.png)
+![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/unpooled%20stat%20model.png)
 
 ## Fit the model
 
@@ -320,6 +322,8 @@ plt.ylabel("Frequency")
 plt.show()
 ```
 
+![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/unpooled%20model.png)
+
 ``` r
 pred_means <- matrix(0,nrow=96,ncol=30)
 for(i in 1:96){pred_means[i,] = apply(B_sim2[,(30*i-29):(30*i)],2,mean)}
@@ -360,7 +364,7 @@ points(x=mus[,1], y=std[,1], col=col.alpha("red",1))
 
 ## A statistical model
 
-![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/Heteroskedasticity.png)
+![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/Heteroskedasticity%20stat%20model.png)
 
 ## Fit the model
 
@@ -472,6 +476,8 @@ plt.xlabel("Average bought")
 plt.ylabel("Frequency")
 plt.show()
 ```
+
+![](https://github.com/SteveVu2212/Common_value_auctions/blob/main/pictures/Heteroskedasticity.png)
 
 ``` r
 pred_means <- matrix(0,nrow=96,ncol=30)
